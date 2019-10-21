@@ -1,11 +1,11 @@
-package main
+package array_stack
 
 import (
 	"errors"
 	"fmt"
 )
 
-// TODO: BaseList
+// MEMO: BaseList interfaces
 // Size() uint
 // Append(x interface{})
 // AddAll(xs []interface{})
@@ -75,7 +75,12 @@ func (s *ArrayStack) RemoceValue(x interface{}) (interface{}, error) {
 	return s.Remove(index)
 }
 
-// ArrayStack implementation
+// MEMO: ArrayStack interfaces
+// Get(i uint) (interface{}, error)
+// Set(i uint, x interface{}) (interface{}, error)
+// Add(i uint, x interface{}) error
+// Remove(i uint) (interface{}, error)
+
 type ArrayStack struct {
 	a []interface{} // init array size is 1
 	n uint          // number of elements
@@ -140,48 +145,4 @@ func (s *ArrayStack) resize() {
 	b := make([]interface{}, 2*s.n)
 	copy(b[:s.n], s.a[:s.n])
 	s.a = b
-}
-
-func main() {
-	as := NewArrayStack()
-	fmt.Println(as.n)
-	fmt.Println(as.Size())
-	fmt.Println(len(as.a))
-
-	err := as.Add(0, "a") // [a]
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(as)
-	err = as.Add(0, "b") // [b a]
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(as)
-	err = as.Add(1, "c") // [b c a nil]
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(as)
-	_, err = as.Remove(0) // [c a nil nil]
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(as)
-	err = as.Add(2, "d") // [c a d nil]
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(as)
-
-	value, _ := as.Get(0)
-	fmt.Println(value)
-
-	value, _ = as.Set(0, "foo")
-	fmt.Println(value)
-
-	value, _ = as.Get(0)
-	fmt.Println(value)
-
-	fmt.Println(as)
 }
