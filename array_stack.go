@@ -1,4 +1,4 @@
-package array_stack
+package obs
 
 import (
 	"errors"
