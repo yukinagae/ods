@@ -67,7 +67,7 @@ func (s ArrayStack) Index(x interface{}) (int, error) {
 	return 0, fmt.Errorf("%v is not in the list", x)
 }
 
-func (s *ArrayStack) RemoceValue(x interface{}) (interface{}, error) {
+func (s *ArrayStack) RemoveValue(x interface{}) (interface{}, error) {
 	index, err := s.Index(x)
 	if err != nil {
 		return nil, err
