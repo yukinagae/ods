@@ -8,9 +8,9 @@ import (
 
 func TestArrayQueue(t *testing.T) {
 	aq := NewArrayQueue()
-	assert.Equal(t, uint(0), aq.n)
-	assert.Equal(t, uint(0), aq.Size())
-	assert.Equal(t, uint(0), aq.j)
+	assert.Equal(t, 0, aq.n)
+	assert.Equal(t, 0, aq.Size())
+	assert.Equal(t, 0, aq.j)
 	assert.Equal(t, 1, len(aq.a))
 
 	ok := aq.Add("a") // [a]

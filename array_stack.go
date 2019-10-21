@@ -6,7 +6,7 @@ import (
 )
 
 // MEMO: BaseList interfaces
-// Size() uint
+// Size() int
 // Append(x interface{})
 // AddAll(xs []interface{})
 // Clear()
@@ -14,11 +14,11 @@ import (
 // RemoveFirst()
 // AddLast(x interface{})
 // RemoveLast()
-// Insert(i uint, x interface{}) error
-// Index(x interface{}) uint
+// Insert(i int, x interface{}) error
+// Index(x interface{}) int
 // RemoceValue(x interface{}) (interface{}, error)
 
-func (s ArrayStack) Size() uint {
+func (s ArrayStack) Size() int {
 	return s.n
 }
 
@@ -54,14 +54,14 @@ func (s *ArrayStack) RemoveLast() {
 	s.Remove(s.Size() - 1)
 }
 
-func (s *ArrayStack) Insert(i uint, x interface{}) error {
+func (s *ArrayStack) Insert(i int, x interface{}) error {
 	return s.Add(i, x)
 }
 
-func (s ArrayStack) Index(x interface{}) (uint, error) {
+func (s ArrayStack) Index(x interface{}) (int, error) {
 	for index, element := range s.a {
 		if element == x {
-			return uint(index), nil
+			return index, nil
 		}
 	}
 	return 0, fmt.Errorf("%v is not in the list", x)
@@ -76,14 +76,14 @@ func (s *ArrayStack) RemoceValue(x interface{}) (interface{}, error) {
 }
 
 // MEMO: ArrayStack interfaces
-// Get(i uint) (interface{}, error)
-// Set(i uint, x interface{}) (interface{}, error)
-// Add(i uint, x interface{}) error
-// Remove(i uint) (interface{}, error)
+// Get(i int) (interface{}, error)
+// Set(i int, x interface{}) (interface{}, error)
+// Add(i int, x interface{}) error
+// Remove(i int) (interface{}, error)
 
 type ArrayStack struct {
 	a []interface{} // init array size is 1
-	n uint          // number of elements
+	n int           // number of elements
 }
 
 func NewArrayStack() ArrayStack {
@@ -93,15 +93,15 @@ func NewArrayStack() ArrayStack {
 	}
 }
 
-func (s ArrayStack) Get(i uint) (interface{}, error) {
-	if i >= s.n {
+func (s ArrayStack) Get(i int) (interface{}, error) {
+	if i < 0 || i >= s.n {
 		return nil, errors.New("index error")
 	}
 	return s.a[i], nil
 }
 
-func (s *ArrayStack) Set(i uint, x interface{}) (interface{}, error) {
-	if i >= s.n {
+func (s *ArrayStack) Set(i int, x interface{}) (interface{}, error) {
+	if i < 0 || i >= s.n {
 		return nil, errors.New("index error")
 	}
 	y := s.a[i]
@@ -109,12 +109,12 @@ func (s *ArrayStack) Set(i uint, x interface{}) (interface{}, error) {
 	return y, nil
 }
 
-func (s *ArrayStack) Add(i uint, x interface{}) error {
-	if i > s.n {
+func (s *ArrayStack) Add(i int, x interface{}) error {
+	if i < 0 || i > s.n {
 		return errors.New("index error")
 	}
 
-	if s.n == uint(len(s.a)) {
+	if s.n == len(s.a) {
 		s.resize()
 	}
 
@@ -127,15 +127,15 @@ func (s *ArrayStack) Add(i uint, x interface{}) error {
 	return nil
 }
 
-func (s *ArrayStack) Remove(i uint) (interface{}, error) {
-	if i >= s.n {
+func (s *ArrayStack) Remove(i int) (interface{}, error) {
+	if i < 0 || i >= s.n {
 		return nil, errors.New("index error")
 	}
 	x := s.a[i]
 	s.a = append(s.a[:i], s.a[i+1:]...)
 	s.a = append(s.a, nil) // fill nil to the end
 	s.n--
-	if uint(len(s.a)) >= 3*s.n {
+	if len(s.a) >= 3*s.n {
 		s.resize()
 	}
 	return x, nil

@@ -8,8 +8,8 @@ import (
 
 func TestArrayStack(t *testing.T) {
 	as := NewArrayStack()
-	assert.Equal(t, uint(0), as.n)
-	assert.Equal(t, uint(0), as.Size())
+	assert.Equal(t, 0, as.n)
+	assert.Equal(t, 0, as.Size())
 	assert.Equal(t, 1, len(as.a))
 
 	err := as.Add(0, "a") // [a]

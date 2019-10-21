@@ -5,10 +5,10 @@ import (
 )
 
 // MEMO: BaseSet interfaces
-// Size() uint
+// Size() int
 // AddAll(xs []interface{})
 
-func (q ArrayQueue) Size() uint {
+func (q ArrayQueue) Size() int {
 	return q.n
 }
 
@@ -24,8 +24,8 @@ func (q *ArrayQueue) AddAll(xs []interface{}) {
 
 type ArrayQueue struct {
 	a []interface{} // init array size is 1
-	j uint
-	n uint // number of elements
+	j int           // index of first element
+	n int           // number of elements
 }
 
 func NewArrayQueue() ArrayQueue {
@@ -37,10 +37,10 @@ func NewArrayQueue() ArrayQueue {
 }
 
 func (q *ArrayQueue) Add(x interface{}) bool {
-	if q.n+1 > uint(len(q.a)) {
+	if q.n+1 > len(q.a) {
 		q.resize()
 	}
-	q.a[(q.j+q.n)%uint(len(q.a))] = x
+	q.a[(q.j+q.n)%len(q.a)] = x
 	q.n++
 	return true
 }
@@ -50,10 +50,10 @@ func (q *ArrayQueue) Remove() (interface{}, error) {
 		return nil, errors.New("index error")
 	}
 	x := q.a[q.j]
-	q.j = (q.j + 1) % uint(len(q.a))
+	q.j = (q.j + 1) % len(q.a)
 	q.n--
 
-	if uint(len(q.a)) >= 3*q.n {
+	if len(q.a) >= 3*q.n {
 		q.resize()
 	}
 	return x, nil
@@ -61,8 +61,8 @@ func (q *ArrayQueue) Remove() (interface{}, error) {
 
 func (q *ArrayQueue) resize() {
 	b := make([]interface{}, 2*q.n)
-	for k := uint(0); k < q.n; k++ {
-		b[k] = q.a[(q.j+k)%uint(len(q.a))]
+	for k := 0; k < q.n; k++ {
+		b[k] = q.a[(q.j+k)%len(q.a)]
 	}
 	q.a = b
 	q.j = 0
