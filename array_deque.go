@@ -72,7 +72,7 @@ func (q *ArrayDeque) Add(i int, x interface{}) error {
 		if q.j == 0 { // avoid underflow
 			q.j = len(q.a) - 1
 		} else {
-			q.j = (q.j - 1) % len(q.a)
+			q.j = (q.j - 1)
 		}
 		for k := 0; k < i; k++ {
 			q.a[(q.j+k)%len(q.a)] = q.a[(q.j+k+1)%len(q.a)]
