@@ -72,6 +72,4 @@ func TestSLList(t *testing.T) {
 	v, err = list.Get(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "y", v)
-
-	assert.Equal(t, nil, list)
 }
