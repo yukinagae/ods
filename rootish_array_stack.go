@@ -107,7 +107,6 @@ func (s RootishArrayStack) i2b(i int) int {
 
 // TODO: not yet implemented
 func (s *RootishArrayStack) grow(i int) {
-	return 0
 }
 
 // TODO: not yet implemented
